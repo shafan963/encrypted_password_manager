@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: encrypt-password-manager-demo
+    runtime: static
+    buildCommand: mkdir -p site && cp -R frontend/. site/ && sed 's/data-demo="false"/data-demo="true"/' frontend/index.html > site/index.html
+    staticPublishPath: ./site

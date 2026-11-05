@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-demo="false">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ENCRYPT — Password Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">E</span><span>encrypt<span class="brand-dot">.</span></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <button class="nav-item active"><span>▦</span> Password vault</button>
+      <button class="nav-item" id="generatorNav"><span>✳</span> Password generator</button>
+      <div class="sidebar-bottom">
+        <div class="secure-card"><div class="secure-icon">✦</div><strong>Your vault is private</strong><p>Credentials are encrypted before they reach the database.</p><span class="secure-status"><i></i> LOCAL ENCRYPTION</span></div>
+        <div class="profile"><div class="avatar">E</div><div><strong>Personal vault</strong><small>Local workspace</small></div><span class="profile-dots">•••</span></div>
+      </div>
+    </aside>
+
+    <section class="main-panel">
+      <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <b>Password vault</b></div><div class="top-actions"><span class="local-pill"><i></i> LOCAL & PRIVATE</span><div class="avatar small">E</div></div></header>
+
+      <section id="authView" class="auth-wrap">
+        <div class="auth-card">
+          <div class="auth-symbol">✦</div>
+          <p class="eyebrow" id="authEyebrow">YOUR PRIVATE SPACE</p>
+          <h1 id="authTitle">Unlock your vault<span>.</span></h1>
+          <p class="auth-copy" id="authCopy">One master password. Every credential, protected.</p>
+          <form id="authForm">
+            <label for="loginName">LOGIN NAME</label>
+            <div class="password-input"><input id="loginName" type="text" autocomplete="username" placeholder="Enter your login name" required></div>
+            <label for="master">MASTER PASSWORD</label>
+            <div class="password-input"><input id="master" type="password" minlength="4" autocomplete="current-password" placeholder="Enter your master password" required><button type="button" class="reveal" data-target="master">◉</button></div>
+            <p class="field-hint" id="masterHint">Default login: admin · Default master password: 0000. Change it after signing in.</p>
+            <button class="primary-btn full" id="authSubmit">Unlock vault <span>→</span></button>
+          </form>
+          <p class="auth-error" id="authError"></p>
+          <div class="auth-foot"><span class="lock">♧</span> Protected with AES-256-GCM encryption</div>
+        </div>
+      </section>
+
+      <section id="appView" class="app-view hidden">
+        <div class="welcome-row"><div><p class="eyebrow">YOUR DIGITAL LIFE, ORGANIZED</p><h1>Password vault<span>.</span></h1><p class="subheading">A secure home for all your online accounts.</p></div><div class="welcome-actions"><button class="secondary-btn" id="changeMasterOpen">Change master password</button><button class="primary-btn" id="addOpen">＋ Add password</button></div></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>STORED LOGINS</span><span class="stat-icon">▤</span></div><strong id="totalCount">0</strong><small>Credentials in your vault</small></article>
+          <article class="stat-card"><div class="stat-top"><span>ENCRYPTION</span><span class="stat-icon green">⌑</span></div><strong>AES-256</strong><small>Authenticated encryption</small></article>
+          <article class="stat-card"><div class="stat-top"><span>VAULT STATUS</span><span class="stat-icon green">✓</span></div><strong class="status-text">Protected</strong><small><i class="green-dot"></i> Local database active</small></article>
+        </div>
+        <div class="vault-heading"><div><h2>Your passwords</h2><p>Manage your saved credentials.</p></div><div class="search-wrap"><span>⌕</span><input id="search" placeholder="Search accounts..."></div></div>
+        <div class="table-card">
+          <div class="table-head"><span>WEBSITE / APP</span><span>USERNAME</span><span>PASSWORD</span><span>ACTION</span></div>
+          <div id="entries"><div class="empty-state"><div class="empty-icon">▤</div><strong>Your vault is empty</strong><p>Add your first login to get started.</p><button class="text-btn" id="emptyAdd">＋ Add your first password</button></div></div>
+        </div>
+        <footer class="footer-note"><span>✦ ENCRYPTED BY DESIGN</span><span>Built with C · OpenSSL · SQLite</span></footer>
+      </section>
+
+      <section id="generatorView" class="generator-view hidden">
+        <button class="back-link" id="backVault">← Back to vault</button>
+        <p class="eyebrow">SECURITY TOOL</p><h1>Password generator<span>.</span></h1><p class="subheading">Create a strong, unique password for every account.</p>
+        <div class="generator-card">
+          <label>GENERATED PASSWORD</label>
+          <div class="generated"><input id="generatedPassword" readonly><button id="copyGenerated" class="icon-btn">▢</button></div>
+          <div class="strength-row"><span>STRENGTH</span><b id="strengthLabel">Strong</b></div><div class="strength-track"><i id="strengthBar"></i></div>
+          <div class="range-row"><label for="length">PASSWORD LENGTH</label><b id="lengthValue">20</b></div>
+          <input type="range" id="length" min="8" max="40" value="20">
+          <div class="checks"><label><input type="checkbox" id="upper" checked> Uppercase letters</label><label><input type="checkbox" id="lower" checked> Lowercase letters</label><label><input type="checkbox" id="numbers" checked> Numbers</label><label><input type="checkbox" id="symbols" checked> Symbols</label></div>
+          <button class="primary-btn full" id="generate">↻ Generate password</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="modal hidden" id="addModal"><div class="modal-card"><button class="modal-close" id="modalClose">×</button><p class="eyebrow">NEW CREDENTIAL</p><h2>Add a password<span>.</span></h2><p class="modal-copy">Your password is encrypted by the C backend before storage.</p>
+    <form id="addForm">
+      <label for="site">WEBSITE / APP NAME</label><input id="site" placeholder="e.g. Google" required>
+      <label for="username">USERNAME / EMAIL</label><input id="username" placeholder="name@example.com" required>
+      <label for="password">PASSWORD</label><div class="password-input"><input id="password" type="password" placeholder="Enter account password" required><button type="button" class="reveal" data-target="password">◉</button></div>
+      <div class="modal-actions"><button type="button" class="secondary-btn" id="cancelAdd">Cancel</button><button class="primary-btn">Encrypt & save →</button></div>
+      <p class="auth-error" id="addError"></p>
+    </form>
+  </div></div>
+  <div class="modal hidden" id="changeMasterModal"><div class="modal-card"><button class="modal-close" id="changeMasterClose">×</button><p class="eyebrow">VAULT SECURITY</p><h2>Change master password<span>.</span></h2><p class="modal-copy">Choose a strong new password. All saved credentials will be re-encrypted.</p>
+    <form id="changeMasterForm">
+      <label for="currentMaster">CURRENT MASTER PASSWORD</label><div class="password-input"><input id="currentMaster" type="password" minlength="4" autocomplete="current-password" required><button type="button" class="reveal" data-target="currentMaster">◉</button></div>
+      <label for="newMaster">NEW MASTER PASSWORD</label><div class="password-input"><input id="newMaster" type="password" minlength="10" autocomplete="new-password" required><button type="button" class="reveal" data-target="newMaster">◉</button></div>
+      <label for="confirmMaster">CONFIRM NEW PASSWORD</label><div class="password-input"><input id="confirmMaster" type="password" minlength="10" autocomplete="new-password" required><button type="button" class="reveal" data-target="confirmMaster">◉</button></div>
+      <p class="field-hint">Use at least 10 characters and store it somewhere safe; it cannot be recovered.</p>
+      <div class="modal-actions"><button type="button" class="secondary-btn" id="changeMasterCancel">Cancel</button><button class="primary-btn">Update master password</button></div>
+      <p class="auth-error" id="changeMasterError"></p>
+    </form>
+  </div></div>
+  <div class="toast" id="toast"></div>
+  <script src="/script.js"></script>
+</body>
+</html>
